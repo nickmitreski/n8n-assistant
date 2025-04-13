@@ -21,7 +21,7 @@ class TodoManager {
 
     async fetchTodos() {
         try {
-            const response = await fetch(`${this.API_BASE_URL}/api/todos`, {
+            const response = await fetch(`${this.API_BASE_URL}/api/n8n/todos`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -33,7 +33,7 @@ class TodoManager {
             }
             
             const data = await response.json();
-            this.todos = data || [];
+            this.todos = data.data || [];
         } catch (error) {
             this.showToast('Error fetching todos: ' + error.message);
             this.todos = [];
@@ -95,7 +95,7 @@ class TodoManager {
 
     async createTodo(text) {
         try {
-            const response = await fetch(`${this.API_BASE_URL}/api/todos`, {
+            const response = await fetch(`${this.API_BASE_URL}/api/n8n/todos`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ text, completed: false })
@@ -115,7 +115,7 @@ class TodoManager {
             const todo = this.todos.find(t => t.id === todoId);
             if (!todo) throw new Error('Todo not found');
 
-            const response = await fetch(`${this.API_BASE_URL}/api/todos/${todoId}`, {
+            const response = await fetch(`${this.API_BASE_URL}/api/n8n/todos/${todoId}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ completed: !todo.completed })
@@ -135,7 +135,7 @@ class TodoManager {
         if (text === null) return;
 
         try {
-            const response = await fetch(`${this.API_BASE_URL}/api/todos/${todo.id}`, {
+            const response = await fetch(`${this.API_BASE_URL}/api/n8n/todos/${todo.id}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ text })
@@ -154,7 +154,7 @@ class TodoManager {
         if (!confirm('Are you sure you want to delete this todo?')) return;
 
         try {
-            const response = await fetch(`${this.API_BASE_URL}/api/todos/${todoId}`, {
+            const response = await fetch(`${this.API_BASE_URL}/api/n8n/todos/${todoId}`, {
                 method: 'DELETE'
             });
 

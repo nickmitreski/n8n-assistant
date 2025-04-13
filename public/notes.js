@@ -1,5 +1,6 @@
 class NotesManager {
     constructor() {
+        this.API_BASE_URL = window.API_BASE_URL || window.location.origin;
         this.notes = [];
         this.notesContainer = document.getElementById('notes-container');
         this.toast = document.getElementById('toast');
@@ -17,11 +18,12 @@ class NotesManager {
 
     async loadNotes() {
         try {
-            const response = await fetch(`${window.API_BASE_URL}/api/notes`);
+            const response = await fetch(`${this.API_BASE_URL}/api/n8n/notes`);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            this.notes = await response.json();
+            const data = await response.json();
+            this.notes = data.data || [];
         } catch (error) {
             this.showToast('Error loading notes: ' + error.message);
             this.notes = [];
@@ -78,7 +80,7 @@ class NotesManager {
             const note = this.notes.find(n => n.id === noteId);
             if (!note) throw new Error('Note not found');
 
-            const response = await fetch(`${window.API_BASE_URL}/api/notes/${noteId}`, {
+            const response = await fetch(`${this.API_BASE_URL}/api/n8n/notes/${noteId}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ pinned: !note.pinned })
@@ -101,7 +103,7 @@ class NotesManager {
         if (content === null) return;
 
         try {
-            const response = await fetch(`${window.API_BASE_URL}/api/notes/${note.id}`, {
+            const response = await fetch(`${this.API_BASE_URL}/api/n8n/notes/${note.id}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ title, content })
@@ -120,7 +122,7 @@ class NotesManager {
         if (!confirm('Are you sure you want to delete this note?')) return;
 
         try {
-            const response = await fetch(`${window.API_BASE_URL}/api/notes/${noteId}`, {
+            const response = await fetch(`${this.API_BASE_URL}/api/n8n/notes/${noteId}`, {
                 method: 'DELETE'
             });
 
@@ -153,7 +155,7 @@ class NotesManager {
 
     async createNote(title, content) {
         try {
-            const response = await fetch(`${window.API_BASE_URL}/api/notes`, {
+            const response = await fetch(`${this.API_BASE_URL}/api/n8n/notes`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ title, content, pinned: false })
@@ -169,6 +171,7 @@ class NotesManager {
     }
 
     showToast(message) {
+        if (!this.toast) return;
         this.toast.textContent = message;
         this.toast.classList.add('show');
         setTimeout(() => this.toast.classList.remove('show'), 3000);
