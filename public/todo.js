@@ -7,6 +7,7 @@ class TodoManager {
 
     async init() {
         try {
+            console.log('Initializing TodoManager with API Base URL:', this.API_BASE_URL);
             await this.fetchTodos();
             this.renderTodos();
         } catch (error) {
@@ -20,11 +21,19 @@ class TodoManager {
     async fetchTodos() {
         try {
             console.log('Fetching todos from:', `${this.API_BASE_URL}/api/n8n/todos`);
-            const response = await fetch(`${this.API_BASE_URL}/api/n8n/todos`);
+            const response = await fetch(`${this.API_BASE_URL}/api/n8n/todos`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
+            
             const data = await response.json();
+            console.log('Fetched todos data:', data);
             this.todos = data.data || [];
         } catch (error) {
             console.error('Error fetching todos:', error);

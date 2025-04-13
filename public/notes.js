@@ -7,6 +7,7 @@ class NotesManager {
 
     async init() {
         try {
+            console.log('Initializing NotesManager with API Base URL:', this.API_BASE_URL);
             await this.loadNotes();
             this.renderNotes();
         } catch (error) {
@@ -20,11 +21,20 @@ class NotesManager {
     async loadNotes() {
         try {
             console.log('Loading notes from:', `${this.API_BASE_URL}/api/notes`);
-            const response = await fetch(`${this.API_BASE_URL}/api/notes`);
+            const response = await fetch(`${this.API_BASE_URL}/api/notes`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            this.notes = await response.json();
+            
+            const data = await response.json();
+            console.log('Loaded notes data:', data);
+            this.notes = data || [];
         } catch (error) {
             console.error('Error loading notes:', error);
             // Return empty array instead of throwing

@@ -15,6 +15,7 @@ if (!ELEVENLABS_VOICE_ID) {
 // Initialize the application
 document.addEventListener('DOMContentLoaded', () => {
     console.log('Application initialized');
+    console.log('API Base URL:', window.location.origin);
     // Add your initialization code here
 });
 
