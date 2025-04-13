@@ -25,6 +25,19 @@ app.use(express.static('public'));
 // Serve static files from the public directory
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Serve index.html with environment variables
+app.get('/', (req, res) => {
+  const indexPath = path.join(__dirname, 'public', 'index.html');
+  let html = fs.readFileSync(indexPath, 'utf8');
+  
+  // Replace environment variables
+  html = html.replace('<%- N8N_WEBHOOK_URL %>', process.env.N8N_WEBHOOK_URL || '');
+  html = html.replace('<%- ELEVENLABS_API_KEY %>', process.env.ELEVENLABS_API_KEY || '');
+  html = html.replace('<%- ELEVENLABS_VOICE_ID %>', process.env.ELEVENLABS_VOICE_ID || '');
+  
+  res.send(html);
+});
+
 // Todo API endpoints
 // Get all todos
 app.get('/api/todos', async (req, res) => {
