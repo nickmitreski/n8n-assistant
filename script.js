@@ -1,9 +1,9 @@
 // Configuration
 const config = {
-    n8nWebhook: process.env.N8N_WEBHOOK_URL || 'https://primary-production-26324.up.railway.app/webhook/55b6bcf5-21f7-4694-af80-ca870c2bbbd4',
-    elevenlabsApiKey: process.env.ELEVENLABS_API_KEY || '',
-    elevenlabsVoiceId: process.env.ELEVENLABS_VOICE_ID || '5Q0t7uMcjvnagumLfvZi',
-    openaiApiKey: process.env.OPENAI_API_KEY || ''
+    n8nWebhookUrl: window.N8N_WEBHOOK_URL || '',
+    elevenLabsApiKey: window.ELEVENLABS_API_KEY || '',
+    elevenLabsVoiceId: window.ELEVENLABS_VOICE_ID || '',
+    openaiApiKey: window.OPENAI_API_KEY || ''
 };
 
 const ELEVENLABS_API_KEY = process.env.ELEVENLABS_API_KEY;
@@ -290,7 +290,7 @@ function callN8nWithProxy(message) {
         },
         body: JSON.stringify({
             message: message,
-            webhook: config.n8nWebhook
+            webhook: config.n8nWebhookUrl
         })
     })
     .then(response => {
@@ -530,11 +530,11 @@ async function speakWithElevenlabs(text) {
     updateStatus('Generating voice...');
     
     try {
-        const response = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${config.elevenlabsVoiceId}`, {
+        const response = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${config.elevenLabsVoiceId}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'xi-api-key': config.elevenlabsApiKey
+                'xi-api-key': config.elevenLabsApiKey
             },
             body: JSON.stringify({
                 text: text,

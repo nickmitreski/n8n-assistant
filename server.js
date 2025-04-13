@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
 const path = require('path');
+const fs = require('fs');
 require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -19,7 +20,10 @@ app.use(cors({
 
 // Middleware
 app.use(express.json());
-app.use(express.static(path.join(__dirname, './')));
+app.use(express.static('public'));
+
+// Serve static files from the public directory
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Todo API endpoints
 // Get all todos

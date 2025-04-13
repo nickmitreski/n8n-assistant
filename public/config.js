@@ -1,0 +1,5 @@
+// Frontend Configuration
+window.N8N_WEBHOOK_URL = '%%N8N_WEBHOOK_URL%%';
+window.ELEVENLABS_API_KEY = '%%ELEVENLABS_API_KEY%%';
+window.ELEVENLABS_VOICE_ID = '%%ELEVENLABS_VOICE_ID%%';
+window.OPENAI_API_KEY = '%%OPENAI_API_KEY%%'; 
