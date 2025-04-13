@@ -6,8 +6,6 @@ const config = {
     openaiApiKey: window.OPENAI_API_KEY || ''
 };
 
-const ELEVENLABS_API_KEY = process.env.ELEVENLABS_API_KEY;
-
 // DOM Elements
 const chatMessages = document.getElementById('chat-messages');
 const messageInput = document.getElementById('message-input');

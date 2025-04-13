@@ -21,11 +21,10 @@ const API_BASE_URL = 'http://localhost:3000';
 async function fetchTodos() {
     try {
         const response = await fetch(`${API_BASE_URL}/api/n8n/todos`, {
-            method: 'POST',
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ action: 'read' })
+            }
         });
         
         if (!response.ok) {

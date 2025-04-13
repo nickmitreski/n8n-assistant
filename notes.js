@@ -2,6 +2,7 @@
 class NotesManager {
     constructor() {
         this.notes = [];
+        this.baseUrl = window.location.origin;
         this.init();
     }
 
@@ -15,7 +16,7 @@ class NotesManager {
 
     async loadNotes() {
         try {
-            const response = await fetch('/api/notes');
+            const response = await fetch(`${this.baseUrl}/api/notes`);
             if (!response.ok) throw new Error('Failed to fetch notes');
             
             this.notes = await response.json();
@@ -160,7 +161,7 @@ class NotesManager {
     }
 
     async createNote(noteData) {
-        const response = await fetch('/api/notes', {
+        const response = await fetch(`${this.baseUrl}/api/notes`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(noteData)
@@ -171,7 +172,7 @@ class NotesManager {
     }
 
     async updateNote(id, noteData) {
-        const response = await fetch(`/api/notes/${id}`, {
+        const response = await fetch(`${this.baseUrl}/api/notes/${id}`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(noteData)
@@ -185,7 +186,7 @@ class NotesManager {
         if (!confirm('Are you sure you want to delete this note?')) return;
 
         try {
-            const response = await fetch(`/api/notes/${id}`, {
+            const response = await fetch(`${this.baseUrl}/api/notes/${id}`, {
                 method: 'DELETE'
             });
 
