@@ -13,7 +13,7 @@ const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIs
 
 // CORS configuration
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://127.0.0.1:3000'],
+  origin: ['http://localhost:3000', 'http://127.0.0.1:3000', 'https://n8n-assistant.vercel.app'],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
@@ -621,9 +621,9 @@ app.get('/api/testwebhook', async (req, res) => {
   }
 });
 
-// Serve static files
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, './index.html'));
+// Serve index.html for all other routes
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // Catch-all route handler for debugging
@@ -634,9 +634,5 @@ app.use((req, res, next) => {
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`Proxy server running on http://localhost:${PORT}`);
-  console.log(`- Static files served from root directory`);
-  console.log(`- Proxy API endpoint available at /api/proxy`);
-  console.log(`- Test n8n webhook at /api/testwebhook`);
-  console.log(`- Todo API endpoints available at /api/todos`);
+  console.log(`Server is running on port ${PORT}`);
 }); 
