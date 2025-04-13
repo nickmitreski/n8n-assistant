@@ -19,6 +19,7 @@ class TodoManager {
 
     async fetchTodos() {
         try {
+            console.log('Fetching todos from:', `${this.API_BASE_URL}/api/n8n/todos`);
             const response = await fetch(`${this.API_BASE_URL}/api/n8n/todos`);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -32,5 +33,15 @@ class TodoManager {
         }
     }
 
-    // ... existing code ...
-} 
+    renderTodos() {
+        // Implementation for rendering todos
+        console.log('Rendering todos:', this.todos);
+    }
+
+    // Add other methods as needed
+}
+
+// Initialize the TodoManager when the DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    window.todoManager = new TodoManager();
+}); 
