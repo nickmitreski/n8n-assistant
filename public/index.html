@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>N8N Assistant</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Environment Variables -->
+    <script>
+        window.N8N_WEBHOOK_URL = '<%- N8N_WEBHOOK_URL %>';
+        window.ELEVENLABS_API_KEY = '<%- ELEVENLABS_API_KEY %>';
+        window.ELEVENLABS_VOICE_ID = '<%- ELEVENLABS_VOICE_ID %>';
+    </script>
+
+    <!-- Application Scripts -->
+    <script src="script.js"></script>
+    <script src="todo.js"></script>
+    <script src="notes.js"></script>
+</body>
+</html> 
