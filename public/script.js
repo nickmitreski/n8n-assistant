@@ -1,21 +1,21 @@
-// Get environment variables from window object with fallbacks
-const N8N_WEBHOOK_URL = window.N8N_WEBHOOK_URL || 'http://localhost:5678/webhook-test';
-const ELEVENLABS_API_KEY = window.ELEVENLABS_API_KEY || '';
-const ELEVENLABS_VOICE_ID = window.ELEVENLABS_VOICE_ID || '';
+// Get environment variables from window object
+const API_BASE_URL = window.API_BASE_URL || window.location.origin;
+const SUPABASE_URL = window.SUPABASE_URL || '';
+const SUPABASE_ANON_KEY = window.SUPABASE_ANON_KEY || '';
 
 // Check if required environment variables are set
-if (!ELEVENLABS_API_KEY) {
-    console.warn('ELEVENLABS_API_KEY is not set');
+if (!SUPABASE_URL) {
+    console.warn('SUPABASE_URL is not set');
 }
 
-if (!ELEVENLABS_VOICE_ID) {
-    console.warn('ELEVENLABS_VOICE_ID is not set');
+if (!SUPABASE_ANON_KEY) {
+    console.warn('SUPABASE_ANON_KEY is not set');
 }
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', () => {
     console.log('Application initialized');
-    console.log('API Base URL:', window.location.origin);
+    console.log('API Base URL:', API_BASE_URL);
     // Add your initialization code here
 });
 
